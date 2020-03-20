@@ -1,0 +1,20 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: 2
+    - uses: SamKirkland/FTP-Deploy-Action@3.0.0
+      with:
+        ftp-server: ftp://test.badminton-steiermark.at
+        ftp-username: test
+        ftp-password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./wp-content
